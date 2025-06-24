@@ -55,7 +55,26 @@ app.use(express.urlencoded({ extended: true }));
 const dbConfig = require('./config/database-pg');
 dbConfig.initializeDatabase();
 
-// Health check endpoint (moved before API routes)
+// Root route - API information
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Employee Management System API',
+    version: '1.0.0',
+    status: 'Running ✅',
+    environment: process.env.NODE_ENV || 'development',
+    endpoints: {
+      health: '/health or /api/health',
+      auth: '/api/auth/login, /api/auth/register',
+      employees: '/api/employees (GET, POST, PUT, DELETE)',
+      analytics: '/api/analytics/*'
+    },
+    database: 'Connected to Neon PostgreSQL',
+    deployment: 'Railway',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'OK', 
@@ -82,33 +101,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Serve static files from React build in production
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-  
-  // Handle React routing - return all requests to React app
-  // This must come after API routes
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-  });
-} else {
-  // Development mode - show API info
-  app.get('/', (req, res) => {
-    res.json({
-      message: 'Employee Management System API',
-      version: '1.0.0',
-      environment: 'development',
-      endpoints: {
-        health: '/health or /api/health',
-        auth: '/api/auth/*',
-        employees: '/api/employees/*',
-        analytics: '/api/analytics/*'
-      }
-    });
-  });
-}
-
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err.message);
@@ -120,11 +112,24 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Handle 404 for API routes only (not in production for React routing)
+// Handle 404 for API routes
 app.use('/api/*', (req, res) => {
   res.status(404).json({ 
     message: 'API route not found',
     availableRoutes: ['/api/auth', '/api/employees', '/api/analytics', '/api/health']
+  });
+});
+
+// Handle all other routes with API info
+app.use('*', (req, res) => {
+  res.status(404).json({
+    message: 'Route not found',
+    availableRoutes: {
+      root: '/',
+      health: '/health',
+      api: '/api/*'
+    },
+    note: 'This is an API-only service. Frontend should be deployed separately.'
   });
 });
 
@@ -134,12 +139,6 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🏥 Health check: http://localhost:${PORT}/health`);
   console.log(`🔗 API base: http://localhost:${PORT}/api`);
-  
-  if (process.env.NODE_ENV === 'production') {
-    console.log(`🌐 Frontend served from: ${path.join(__dirname, '../frontend/build')}`);
-  } else {
-    console.log(`🛠️  Development mode - Frontend should run separately on port 3000`);
-  }
-  
+  console.log(`🎯 API-only deployment - Frontend served separately`);
   console.log(`🔄 Database initialized successfully`);
 });

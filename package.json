@@ -1,4 +1,33 @@
 {
+  "name": "employee-management-system",
+  "version": "1.0.0",
+  "description": "Full-stack Employee Management System with React, Node.js, Express, and PostgreSQL",
+  "main": "backend/server.js",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "start": "cd backend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm start",
+    "install-backend": "cd backend && npm install",
+    "install-frontend": "cd frontend && npm install",
+    "install-all": "npm run install-backend && npm run install-frontend"
+  },
+  "keywords": [
+    "employee-management",
+    "react",
+    "nodejs",
+    "express",
+    "postgresql",
+    "full-stack",
+    "jwt-authentication"
+  ],
+  "author": "Ganesh Gupta",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "devDependencies": {
     "concurrently": "^9.2.0"
   }

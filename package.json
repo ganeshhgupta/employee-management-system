@@ -25,8 +25,8 @@
   "author": "Ganesh Gupta",
   "license": "ISC",
   "engines": {
-    "node": "18.x",
-    "npm": "9.x"
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"

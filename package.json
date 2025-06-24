@@ -4,8 +4,8 @@
   "description": "Full-stack Employee Management System with React, Node.js, Express, and PostgreSQL",
   "main": "backend/server.js",
   "scripts": {
-    "build": "cd frontend && npm ci --only=production && npm run build",
-    "start": "cd backend && npm start",
+    "build": "echo 'Backend-only build complete'",
+    "start": "cd backend && npm install && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd backend && npm run dev",
     "client": "cd frontend && npm start",

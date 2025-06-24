@@ -52,7 +52,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Database initialization
-const dbConfig = require('./config/database');
+const dbConfig = require('./config/database-pg');
 dbConfig.initializeDatabase();
 
 // Health check endpoint (moved before API routes)

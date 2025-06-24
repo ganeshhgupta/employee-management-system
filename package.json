@@ -4,7 +4,7 @@
   "description": "Full-stack Employee Management System with React, Node.js, Express, and PostgreSQL",
   "main": "backend/server.js",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
+    "build": "cd frontend && npm ci --only=production && npm run build",
     "start": "cd backend && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd backend && npm run dev",
@@ -25,8 +25,8 @@
   "author": "Ganesh Gupta",
   "license": "ISC",
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
+    "node": "18.x",
+    "npm": "9.x"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"

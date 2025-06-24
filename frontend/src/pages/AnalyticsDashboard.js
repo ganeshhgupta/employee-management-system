@@ -136,7 +136,7 @@ const AnalyticsDashboard = () => {
   };
 
   const hireTrendsData = {
-    labels: data.employeeMetrics.hireDateTrends?.map(h => `${h.year}-${h.month.padStart(2, '0')}`) || [],
+    labels: data.employeeMetrics.hireDateTrends?.map(h => `${h.year}-${String(h.month).padStart(2, '0')}`) || [],
     datasets: [
       {
         label: 'New Hires',

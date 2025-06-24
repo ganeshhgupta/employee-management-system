@@ -1,10 +1,7 @@
-// API Configuration for different environments
+// API Configuration for split deployment (Frontend on Vercel, Backend on Railway)
 const config = {
-  // In production, API calls go to the same domain (Railway serves both frontend and backend)
-  // In development, API calls go to localhost:5000
-  API_BASE_URL: process.env.NODE_ENV === 'production' 
-    ? '' // Same domain in production
-    : 'http://localhost:5000',
+  // Use the environment variable for Railway backend URL
+  API_BASE_URL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
   
   // Other configuration options
   APP_NAME: 'Employee Management System',

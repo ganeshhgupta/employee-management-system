@@ -15,13 +15,15 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:3000', // Development frontend
       'http://localhost:3001', // Alternative dev port
+      'https://employee-management-system-gzpb.vercel.app', // Your Vercel domain
     ];
     
     // In production, allow Railway domains and your custom domain
     if (process.env.NODE_ENV === 'production') {
       allowedOrigins.push(
         process.env.FRONTEND_URL,
-        /^https:\/\/.*\.up\.railway\.app$/
+        /^https:\/\/.*\.up\.railway\.app$/,
+        /^https:\/\/.*\.vercel\.app$/ // Allow all Vercel domains
       );
     }
     
@@ -38,6 +40,7 @@ const corsOptions = {
     if (isAllowed) {
       callback(null, true);
     } else {
+      console.log('CORS blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
